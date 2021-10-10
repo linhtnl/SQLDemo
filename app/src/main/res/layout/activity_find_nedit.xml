@@ -19,21 +19,45 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Student Code: " />
-
-    <EditText
-        android:id="@+id/edtCode2"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/edtCode2"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_red_light"
+            android:id="@+id/txtErrorCode2"
+            android:layout_marginLeft="10dp"
+            android:text=""/>
+    </LinearLayout>
+
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="FullName: " />
-
-    <EditText
-        android:id="@+id/edtFullname2"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/edtFullname2"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_red_light"
+            android:id="@+id/txtErrorName2"
+            android:layout_marginLeft="10dp"
+            android:text=""/>
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -76,7 +100,17 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="Update"
+            android:id="@+id/btnUpdate"
+            android:enabled="false"
             android:onClick="clickToUpdate"/>
     </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/txtError"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="20dp"
+        android:gravity="center"/>
 
 </LinearLayout>

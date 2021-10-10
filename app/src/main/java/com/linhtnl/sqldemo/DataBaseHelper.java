@@ -32,7 +32,18 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
-
+    public boolean checkExistStudentCode(String studentCode){
+        boolean result=false;
+        SQLiteDatabase db=this.getReadableDatabase();
+        String sql="SELECT * FROM "+TABLE_STUDENT+" where "+ COLUMN_CODE+" = '"+studentCode+"'";
+        Cursor cursor=db.rawQuery(sql,null);
+        if(cursor.moveToFirst()){
+            result=true;
+        }
+        cursor.close();
+        db.close();
+        return result;
+    }
     public boolean createNewStudent(StudentModel student) {
         //getWritableDatabase for insert actions
         //getReadableDatabase for select actions
@@ -46,8 +57,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         long insert = db.insert(TABLE_STUDENT, null, contentValues);
         if (insert == -1) {
+            db.close();
             return false;
         } else {
+            db.close();
             return true;
         }
     }
@@ -76,7 +89,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public boolean DeleteAStudent(String code) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_STUDENT, COLUMN_CODE + " = '" + code + "'", null) > 0;
+        boolean result=db.delete(TABLE_STUDENT, COLUMN_CODE + " = '" + code + "'", null) > 0;
+        db.close();
+        return result;
     }
 
     public StudentModel findStudentByCode(String code) {
