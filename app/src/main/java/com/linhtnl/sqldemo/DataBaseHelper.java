@@ -35,8 +35,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public boolean checkExistStudentCode(String studentCode){
         boolean result=false;
         SQLiteDatabase db=this.getReadableDatabase();
-        String sql="SELECT * FROM "+TABLE_STUDENT+" where "+ COLUMN_CODE+" = '"+studentCode+"'";
-        Cursor cursor=db.rawQuery(sql,null);
+        String sql="SELECT * FROM "+TABLE_STUDENT+" where "+ COLUMN_CODE+" = ?";
+        Cursor cursor=db.rawQuery(sql,new String[]{studentCode});
         if(cursor.moveToFirst()){
             result=true;
         }
@@ -56,11 +56,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_DATE_OF_BIRTH, student.getDateOfBirth());
 
         long insert = db.insert(TABLE_STUDENT, null, contentValues);
+        db.close();
         if (insert == -1) {
-            db.close();
             return false;
         } else {
-            db.close();
             return true;
         }
     }
@@ -89,16 +88,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public boolean DeleteAStudent(String code) {
         SQLiteDatabase db = this.getWritableDatabase();
-        boolean result=db.delete(TABLE_STUDENT, COLUMN_CODE + " = '" + code + "'", null) > 0;
+        boolean result=db.delete(TABLE_STUDENT, COLUMN_CODE + " = ?", new String[]{code}) > 0;
         db.close();
         return result;
     }
 
     public StudentModel findStudentByCode(String code) {
         StudentModel student = null;
-        String queryStr = "SELECT * FROM " + TABLE_STUDENT + " WHERE " + COLUMN_CODE + " = '" + code + "'";
+        String queryStr = "SELECT * FROM " + TABLE_STUDENT + " WHERE " + COLUMN_CODE + " = ?";
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(queryStr, null);
+        Cursor cursor = db.rawQuery(queryStr, new String[]{code});
         if (cursor.moveToFirst()) {
             String stuCode = cursor.getString(0);
             String fullName = cursor.getString(1);
@@ -114,6 +113,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_FULLNAME, student.getFullName());
         contentValues.put(COLUMN_DATE_OF_BIRTH, student.getDateOfBirth());
 
-        return db.update(TABLE_STUDENT,contentValues,"code = '"+student.getStudentCode()+"'",null)>0;
+        return db.update(TABLE_STUDENT,contentValues,"code = ?",new String[]{student.getStudentCode()})>0;
     }
 }

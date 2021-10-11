@@ -38,7 +38,7 @@ public class FindNEditActivity extends AppCompatActivity implements DatePickerDi
     }
 
     public void clickToChangeDate(View view) {
-        DialogFragment dateFragment = new DatePickerFragment();
+        DialogFragment dateFragment = new DatePickerFragment("FindNEditActivity");
         dateFragment.show(getSupportFragmentManager(), "DatePicker");
     }
 
